@@ -111,3 +111,4 @@ jobs:
           assert calcular_preco_final(100, 10, 10) == 99.0
           print('Smoke test passou — módulo operacional')
           "
+# ola manitos
