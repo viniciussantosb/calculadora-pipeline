@@ -17,4 +17,6 @@ def calcular_preco_final(
     imposto = calcular_imposto(preco_com_desconto, aliquota_imposto)
     return round(preco_com_desconto + imposto, 2)
 
-api_key = "AKIAI0SFODNN7EXAMPL3"  # simulando credencial hardcoded
+api_key = "AKIAI0SFODNN7EXAMPL3"
+#novo teste
+
