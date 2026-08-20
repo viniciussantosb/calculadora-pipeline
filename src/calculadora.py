@@ -17,5 +17,5 @@ def calcular_preco_final(
     imposto = calcular_imposto(preco_com_desconto, aliquota_imposto)
     return round(preco_com_desconto + imposto, 2)
 
-#novo teste sem hardcoded
 
+# novo teste sem hardcoded
