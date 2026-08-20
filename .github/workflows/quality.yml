@@ -1,0 +1,75 @@
+name: Qualidade
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache de dependências
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Lint com Ruff
+        run: ruff check src/ tests/
+
+      - name: Verificar formatação com Ruff
+        run: ruff format --check src/ tests/
+
+  test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache de dependências
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Executar testes com cobertura
+        run: >
+          pytest tests/unit/
+          -m unit
+          --cov=src.calculadora
+          --cov-report=xml
+          --cov-report=html
+          --cov-fail-under=80
+          --tb=short
+
+      - name: Publicar relatório HTML de cobertura
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: htmlcov/
+
+      - name: Publicar relatório XML de cobertura
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-xml
+          path: coverage.xml

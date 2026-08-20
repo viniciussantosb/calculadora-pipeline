@@ -1,0 +1,7 @@
+[lint]
+select = ["E", "F", "W"]
+ignore = []
+
+[format]
+quote-style = "double"
+indent-style = "space"
