@@ -1,3 +1,5 @@
+import os
+
 def calcular_desconto(preco: float, percentual: float) -> float:
     if percentual < 0 or percentual > 100:
         raise ValueError("Percentual deve estar entre 0 e 100")
